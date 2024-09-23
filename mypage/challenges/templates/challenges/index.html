@@ -1,16 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Monthly Challenges</title>
-  </head>
-  <body>
-    <h1> Monthly Challenges </h1>
-    <ul>
-      {% for month in months_list %}
+{% extends "base.html" %}
+
+{% block page_title %}
+  Monthly Challenges
+{% endblock %}
+
+{% block content %}
+  {% include "challenges/includes/header.html" %}
+  
+  <h1> Monthly Challenges </h1>
+  <ul>
+    {% for month in months_list %}
       <li><a href="{% url "month-challenge" month=month %}"> {{ month|title }} </a></li>
-      {% endfor %}
-    </ul>
-  </body>
-</html>
+    {% endfor %}
+  </ul>
+{% endblock %}
