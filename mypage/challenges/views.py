@@ -46,7 +46,6 @@ def monthly_challenge_by_number(request, month):
 def monthly_challenge(request, month):
     challenge_text = monthly_challenges.get(month)
     if challenge_text is not None:
-        response_data = f"<h1>{challenge_text}</h1>"
-        return HttpResponse(response_data)
+        return render(request, "challenges/challenge.html")
     else:
         return HttpResponseNotFound("<h1>Please enter valid month!</h1>")
