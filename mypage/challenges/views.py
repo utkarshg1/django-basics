@@ -14,7 +14,7 @@ monthly_challenges = {
     "september": "Learn to cook cheese balls",
     "october": "Learn to bake bread from scratch using yeast",
     "november": "Watch manufacturing engineering documentary",
-    "december": "Cycling from home to Lonavala"
+    "december": None
 }
 
 
@@ -23,14 +23,10 @@ def get_months():
 
 
 def index(request):
-    list_items = ""
     months = get_months()
-    for month in months:
-        capitalized_month = month.capitalize()
-        month_path = reverse("month-challenge", args=[month])
-        list_items += f"<li><a href={month_path}>{capitalized_month}</li>"
-    response_data = f"<ul>{list_items}</ul>"
-    return HttpResponse(response_data)
+    return render(request, "challenges/index.html", {
+        "months_list": months
+    })
 
 
 def monthly_challenge_by_number(request, month):
@@ -44,8 +40,11 @@ def monthly_challenge_by_number(request, month):
 
 
 def monthly_challenge(request, month):
-    challenge_text = monthly_challenges.get(month)
-    if challenge_text is not None:
-        return render(request, "challenges/challenge.html")
-    else:
+    try:
+        challenge_text = monthly_challenges[month]
+        return render(request, "challenges/challenge.html", {
+            "text": challenge_text,
+            "month_name": month
+        })
+    except:
         return HttpResponseNotFound("<h1>Please enter valid month!</h1>")
